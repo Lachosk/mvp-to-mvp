@@ -41,7 +41,7 @@ function draw() {
     /*newCursor(pmouseX, pmouseY);
     fill(255);
     ellipse(controllerX, controllerY, ballSize, ballSize);*/
-    
+
 
 }
 
@@ -66,33 +66,33 @@ function preloadImages() {
     screen6 = loadImage('img/MUPI-screen6.png');
 
 }
- 
-function displayScreens(){
+
+function displayScreens() {
     switch (screenNum) {
         case 1:
-            image(screen1, 0,0);
+            image(screen1, 0, 0);
             break;
-        
+
         case 2:
-            image(screen2, 0,0);
+            image(screen2, 0, 0);
             break;
-        
+
         case 3: //Pantalla de juego
-            image(screen3, 0,0);
+            image(screen3, 0, 0);
             break;
-        
+
         case 4:
-            image(screen4, 0,0);
+            image(screen4, 0, 0);
             break;
-        
+
         case 5:
-            image(screen5, 0,0);
+            image(screen5, 0, 0);
             break;
-        
+
         case 6:
-            image(screen6, 0,0);
+            image(screen6, 0, 0);
             break;
-    
+
         default:
             break;
     }
@@ -167,9 +167,9 @@ socket.on('screens', (screenNumber) => {
         case 2:
             screenNum = 6;
             break;
-        
+
         case 3:
-                screenNum = 2;
+            screenNum = 2;
             break;
 
         case 4:

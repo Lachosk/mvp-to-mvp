@@ -1,6 +1,8 @@
 const NGROK = `https://${window.location.hostname}`;
 console.log('Server IP: ', NGROK);
-let socket = io(NGROK, { path: '/real-time' });
+let socket = io(NGROK, {
+    path: '/real-time'
+});
 
 let controllerX, controllerY = 0;
 let interactions = 2;
@@ -15,6 +17,7 @@ let screen_MB4;
 let screen_MB5;
 let screen_MB6;
 
+
 function setup() {
     frameRate(60);
     canvas = createCanvas(windowWidth, windowHeight);
@@ -28,14 +31,22 @@ function setup() {
     screenMobile = 1;
     angleMode(DEGREES);
 
-    socket.emit('device-size', {windowWidth, windowHeight});
+    socket.emit('device-size', {
+        windowWidth,
+        windowHeight
+    });
     preloadImages();
+
     //DeviceOrientationEvent.requestPermission();
-    let btn1 = createButton("Play now");
-	btn1.mousePressed(function(){
-		DeviceOrientationEvent.requestPermission();
+    let btn1 = createButton("Juega Ahora");
+
+
+    btn1.mousePressed(function () {
+        console.log("hola papus")
+        screenMobile++;
+        //DeviceOrientationEvent.requestPermission();
         orderScreen(2);
-	});
+    });
 
 }
 
@@ -62,33 +73,33 @@ function preloadImages() {
 
 }
 
-function displayScreens(){
+function displayScreens(btn1) {
     switch (screenMobile) {
         case 1:
-            image(screen_MB1, 0,0);
+            image(screen_MB1, 0, 0);
             break;
-        
+
         case 2:
-            image(screen_MB2, 0,0);
-            btn1.hide();
+            image(screen_MB2, 0, 0);
+            this.btn1.hide();
             break;
-        
+
         case 3: //Pantalla de juego
-            image(screen_MB3, 0,0);
+            image(screen_MB3, 0, 0);
             break;
-        
+
         case 4:
-            image(screen_MB4, 0,0);
+            image(screen_MB4, 0, 0);
             break;
-        
+
         case 5:
-            image(screen_MB5, 0,0);
+            image(screen_MB5, 0, 0);
             break;
-        
+
         case 6:
-            image(screen_MB6, 0,0);
+            image(screen_MB6, 0, 0);
             break;
-    
+
         default:
             break;
     }
@@ -98,14 +109,14 @@ function orderScreen(screenNumber) {
     socket.emit('screens', screenNumber);
 }
 
-/*function touchMoved() {
+function touchMoved() {
     switch (interactions) {
         case 0:
             socket.emit('mobile-instructions', { interactions, pmouseX, pmouseY });
             background(255, 0, 0);
             break;
     }
-}*/
+}
 
 /*function touchStarted(){
     isTouched = true;
