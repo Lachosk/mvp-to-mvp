@@ -37,7 +37,6 @@ function setup() {
     });
     preloadImages();
 
-    //DeviceOrientationEvent.requestPermission();
     let btn1 = createButton("Juega Ahora");
     btn1.mousePressed(function () {
         screenMobile++;
@@ -45,20 +44,17 @@ function setup() {
         orderScreen(3);
         btn1.hide();
     });
+}
 
+function orderScreen(screenNumber) {
+    socket.emit('screens', screenNumber);
 }
 
 function draw() {
     background(0, 5);
     displayScreens();
-    /*newCursor(pmouseX, pmouseY);
-    fill(255);
-    ellipse(controllerX, controllerY, 50, 50);*/
 }
 
-/*function mouseDragged() {
-    socket.emit('positions', { controlX: pmouseX, controlY: pmouseY });
-}*/
 
 function preloadImages() {
 
@@ -72,6 +68,7 @@ function preloadImages() {
 }
 
 function displayScreens() {
+
     switch (screenMobile) {
         case 1:
             image(screen_MB1, 0, 0);
@@ -79,7 +76,7 @@ function displayScreens() {
 
         case 2:
             image(screen_MB2, 0, 0);
-    
+            socket.emit('screens');
             break;
 
         case 3: //Pantalla de juego
@@ -103,14 +100,16 @@ function displayScreens() {
     }
 }
 
-function orderScreen(screenNumber) {
-    socket.emit('screens', screenNumber);
-}
+
 
 function touchMoved() {
     switch (interactions) {
         case 0:
-            socket.emit('mobile-instructions', { interactions, pmouseX, pmouseY });
+            socket.emit('mobile-instructions', {
+                interactions,
+                pmouseX,
+                pmouseY
+            });
             background(255, 0, 0);
             break;
     }

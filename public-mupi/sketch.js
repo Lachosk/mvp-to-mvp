@@ -4,6 +4,9 @@ let socket = io(NGROK, {
 });
 console.log('Server IP: ', NGROK);
 
+
+let comidaMala;
+
 let controllerX, controllerY = 0;
 let deviceWidth, deviceHeight = 0;
 let mupiWidth, mupiHeight = 0;
@@ -20,6 +23,7 @@ let screen5;
 let screen6;
 
 function setup() {
+    comidaMala = new ComidaMala(random(10,590), -10);
     frameRate(60);
     canvas = createCanvas(windowWidth, windowHeight);
     canvas.style('z-index', '-1');
@@ -41,8 +45,6 @@ function draw() {
     /*newCursor(pmouseX, pmouseY);
     fill(255);
     ellipse(controllerX, controllerY, ballSize, ballSize);*/
-
-
 }
 
 function mouseDragged() {
@@ -79,6 +81,7 @@ function displayScreens() {
 
         case 3: //Pantalla de juego
             image(screen3, 0, 0);
+            comidaMala.draw();
             break;
 
         case 4:
