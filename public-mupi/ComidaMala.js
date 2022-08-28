@@ -1,5 +1,5 @@
 class ComidaMala {
-    constructor(x,y) {
+    constructor(x,y,radio,vel) {
         x = x;
         y = y;
         radio = 50;

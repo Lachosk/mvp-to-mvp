@@ -4,12 +4,14 @@ let socket = io(NGROK, {
 });
 console.log('Server IP: ', NGROK);
 
+let comidaMala = new ComidaMala();
 
-let comidaMala;
+
 
 let controllerX, controllerY = 0;
 let deviceWidth, deviceHeight = 0;
 let mupiWidth, mupiHeight = 0;
+
 //let ballSize = 20;
 
 //pantallas
@@ -23,7 +25,6 @@ let screen5;
 let screen6;
 
 function setup() {
-    comidaMala = new ComidaMala(random(10,590), -10);
     frameRate(60);
     canvas = createCanvas(windowWidth, windowHeight);
     canvas.style('z-index', '-1');
