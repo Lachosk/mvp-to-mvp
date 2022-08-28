@@ -4,15 +4,14 @@ let socket = io(NGROK, {
 });
 console.log('Server IP: ', NGROK);
 
-let comidaMala; 
+let comidaMala;
 
-
+let badFood = [];
 
 let controllerX, controllerY = 0;
 let deviceWidth, deviceHeight = 0;
 let mupiWidth, mupiHeight = 0;
 
-//let ballSize = 20;
 
 //pantallas
 let screenNum;
@@ -35,18 +34,20 @@ function setup() {
     controllerY = windowHeight / 2;
     mupiWidth = windowWidth;
     mupiHeight = windowHeight;
+    
+    frameRate(60)
     background(0);
     preloadImages();
     screenNum = 2;
-    comidaMala = new ComidaMala(random(1,590),-10);
+    createFood();
+    //comidaMala = new ComidaMala(random(1, 590), -10);
+    
 }
 
 function draw() {
     background(0, 5);
     displayScreens();
-    /*newCursor(pmouseX, pmouseY);
-    fill(255);
-    ellipse(controllerX, controllerY, ballSize, ballSize);*/
+    
 }
 
 function mouseDragged() {
@@ -71,6 +72,20 @@ function preloadImages() {
 
 }
 
+function createFood(){
+    if (frameCount = 60) {
+        badFood.push(new ComidaMala(random(1, 590), -10))
+        console.log("new ball")
+        frameCount = 0;
+    }
+}
+
+function paintFood(){
+    for (let i = 0; i < badFood.length; i++) {
+        badFood[i].draw();
+    }
+}
+
 function displayScreens() {
     switch (screenNum) {
         case 1:
@@ -83,7 +98,8 @@ function displayScreens() {
 
         case 3: //Pantalla de juego
             image(screen3, 0, 0);
-            comidaMala.draw();
+            paintFood();
+            //comidaMala.draw();
             break;
 
         case 4:
@@ -155,7 +171,6 @@ socket.on('mupi-size', deviceSize => {
     console.log(`User is using a smartphone size of ${deviceWidth} and ${deviceHeight}`);
     screenNum++;
 });
-
 
 
 socket.on('screens', (screenNumber) => {

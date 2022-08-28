@@ -6,8 +6,6 @@ class ComidaMala {
         this.vel = 5;
     }
 
-
-
     draw() {
         fill(255);
         ellipse(this.x, this.y, this.radio, this.radio);
