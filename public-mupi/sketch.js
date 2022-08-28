@@ -4,7 +4,7 @@ let socket = io(NGROK, {
 });
 console.log('Server IP: ', NGROK);
 
-let comidaMala = new ComidaMala();
+let comidaMala; 
 
 
 
@@ -38,6 +38,7 @@ function setup() {
     background(0);
     preloadImages();
     screenNum = 2;
+    comidaMala = new ComidaMala(random(1,590),-10);
 }
 
 function draw() {

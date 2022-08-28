@@ -1,25 +1,22 @@
 class ComidaMala {
     constructor(x,y,radio,vel) {
-        x = x;
-        y = y;
-        radio = 50;
-        vel = 5;
+        this.x = x;
+        this.y = y;
+        this.radio = 50;
+        this.vel = 5;
     }
 
-    pos() {
-        x = random(10, 590)
-        y = -10
-    }
+
 
     draw() {
         fill(255);
-        ellipse(x, y, radio, radio);
+        ellipse(this.x, this.y, this.radio, this.radio);
         this.move();
     }
 
 
     move() {
-        y =+vel;
+        this.y =++ this.vel;
     }
 
 
