@@ -32,7 +32,7 @@ function setup() {
     mupiHeight = windowHeight;
     background(0);
     preloadImages();
-    screenNum = 1;
+    screenNum = 2;
 }
 
 function draw() {

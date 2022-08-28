@@ -28,7 +28,7 @@ function setup() {
     controllerX = windowWidth / 2;
     controllerY = windowHeight / 2;
     background(0);
-    screenMobile = 1;
+    screenMobile = 3;
     angleMode(DEGREES);
 
     socket.emit('device-size', {
@@ -39,13 +39,11 @@ function setup() {
 
     //DeviceOrientationEvent.requestPermission();
     let btn1 = createButton("Juega Ahora");
-
-
     btn1.mousePressed(function () {
-        console.log("hola papus")
         screenMobile++;
         //DeviceOrientationEvent.requestPermission();
-        orderScreen(2);
+        orderScreen(3);
+        btn1.hide();
     });
 
 }
@@ -73,7 +71,7 @@ function preloadImages() {
 
 }
 
-function displayScreens(btn1) {
+function displayScreens() {
     switch (screenMobile) {
         case 1:
             image(screen_MB1, 0, 0);
@@ -81,7 +79,7 @@ function displayScreens(btn1) {
 
         case 2:
             image(screen_MB2, 0, 0);
-            this.btn1.hide();
+    
             break;
 
         case 3: //Pantalla de juego
@@ -140,17 +138,17 @@ function touchEnded(){
     
 }*/
 
-function deviceShaken() {
+/*function deviceShaken() {
     //socket.emit('mobile-instructions', 'Moved!');
     //background(0, 255, 255);
-}
+}*/
 
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
 }
 
-function newCursor(x, y) {
+/*function newCursor(x, y) {
     noStroke();
     fill(255);
     ellipse(x, y, 10, 10);
-}
+}*/
