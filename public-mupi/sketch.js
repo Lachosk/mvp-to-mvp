@@ -150,3 +150,29 @@ socket.on('mupi-size', deviceSize => {
     console.log(`User is using a smartphone size of ${deviceWidth} and ${deviceHeight}`);
     screenNum++;
 });
+
+
+
+socket.on('screens', (screenNumber) => {
+
+    switch (screenNumber) {
+        case 0:
+            screenNum = 1;
+            break;
+
+        case 1:
+            screenNum = 5;
+            break;
+
+        case 2:
+            screenNum = 6;
+            break;
+        
+        case 3:
+                screenNum = 2;
+            break;
+
+        case 4:
+            screenNum = 2;
+    }
+})
