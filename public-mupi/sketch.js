@@ -24,7 +24,7 @@ let screen5;
 let screen6;
 
 function setup() {
-    frameRate(60);
+    //frameRate(60);
     canvas = createCanvas(windowWidth, windowHeight);
     canvas.style('z-index', '-1');
     canvas.style('position', 'fixed');
@@ -35,19 +35,21 @@ function setup() {
     mupiWidth = windowWidth;
     mupiHeight = windowHeight;
     
-    frameRate(60)
+    //frameRate(60)
     background(0);
     preloadImages();
     screenNum = 2;
-    createFood();
+    
     //comidaMala = new ComidaMala(random(1, 590), -10);
     
 }
 
 function draw() {
+    
     background(0, 5);
     displayScreens();
-    
+    createFood();
+   
 }
 
 function mouseDragged() {
@@ -73,10 +75,11 @@ function preloadImages() {
 }
 
 function createFood(){
-    if (frameCount = 60) {
+    if (frameCount % 120 === 0) {
         badFood.push(new ComidaMala(random(1, 590), -10))
         console.log("new ball")
-        frameCount = 0;
+        console.log(m);
+    
     }
 }
 
@@ -99,7 +102,6 @@ function displayScreens() {
         case 3: //Pantalla de juego
             image(screen3, 0, 0);
             paintFood();
-            //comidaMala.draw();
             break;
 
         case 4:
@@ -119,11 +121,11 @@ function displayScreens() {
     }
 }
 
-function newCursor(x, y) {
+/*function newCursor(x, y) {
     noStroke();
     fill(255);
     ellipse(x, y, 10, 10);
-}
+}*/
 
 socket.on('mupi-instructions', instructions => {
     console.log('ID: ' + socket.id);
