@@ -84,7 +84,7 @@ function createFood() {
     }
 
     if (frameCount % 240 === 0) {
-        badFood.push(new ComidaBuena(random(1, 590), -10))
+        goodFood.push(new ComidaBuena(random(1, 590), -10))
     }
 }
 
@@ -136,7 +136,7 @@ function removeFood() {
         }
     }
 
-    console.log(badFood.length);
+    
 }
 
 function touchBadFood(){
@@ -157,13 +157,16 @@ function touchBadFood(){
 }
 
 function touchGoodFood(){
+    
     if (goodFood.length > 0){
+        console.log('funciono')
         for (let i = 0; i < goodFood.length; i++) {
+            
             let goodFoodX = goodFood[i].getX;
             let goodFoodY = goodFood[i].getY;
             if (dist(goodFoodX, goodFoodY, controllerX, 620)<30) {
                 console.log('toca comida buena');
-                goodFood.splice[i];
+                goodFood.splice(i,1);
             }
         }
     }
@@ -264,4 +267,3 @@ socket.on('mupi-react-to-change', screen => {
     screenNum++;
     console.log("Screen has been changed");
 })
-

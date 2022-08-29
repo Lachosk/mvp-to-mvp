@@ -1,5 +1,5 @@
 class ComidaMala {
-    constructor(x,y,radio,vel) {
+    constructor(x,y) {
         this.x = x;
         this.y = y;
         this.radio = 30;
