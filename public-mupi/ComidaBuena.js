@@ -7,7 +7,7 @@ class ComidaBuena {
     }
 
     draw() {
-        fill(255);
+        fill(0, 255, 0);
         ellipse(this.x, this.y, this.radio, this.radio);
         this.move();
     }

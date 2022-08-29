@@ -7,6 +7,7 @@ console.log('Server IP: ', NGROK);
 let comidaMala;
 
 let badFood = [];
+let goodFood = [];
 
 let controllerX, controllerY = 0;
 let deviceWidth, deviceHeight = 0;
@@ -75,17 +76,22 @@ function preloadImages() {
 }
 
 function createFood(){
-    if (frameCount % 120 === 0) {
+    if (frameCount % 360 === 0) {
         badFood.push(new ComidaMala(random(1, 590), -10))
-        console.log("new ball")
-        console.log(m);
-    
+    }
+
+    if (frameCount % 240 === 0) {
+        badFood.push(new ComidaBuena(random(1, 590), -10))
     }
 }
 
 function paintFood(){
     for (let i = 0; i < badFood.length; i++) {
         badFood[i].draw();
+    }
+
+    for (let i = 0; i < goodFood.length; i++) {
+        goodFood[i].draw();
     }
 }
 

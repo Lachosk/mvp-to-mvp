@@ -3,7 +3,7 @@ class ComidaMala {
         this.x = x;
         this.y = y;
         this.radio = 30;
-        this.vel = 5;
+        this.vel = 10;
     }
 
     draw() {
