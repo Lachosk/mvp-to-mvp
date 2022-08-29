@@ -25,7 +25,6 @@ let screen5;
 let screen6;
 
 function setup() {
-    //frameRate(60);
     canvas = createCanvas(windowWidth, windowHeight);
     canvas.style('z-index', '-1');
     canvas.style('position', 'fixed');
@@ -36,12 +35,9 @@ function setup() {
     mupiWidth = windowWidth;
     mupiHeight = windowHeight;
 
-    //frameRate(60)
     background(0);
     preloadImages();
     screenNum = 1;
-    //screenNum = 2;
-    //comidaMala = new ComidaMala(random(1, 590), -10);
 }
 
 function draw() {

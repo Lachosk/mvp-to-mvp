@@ -38,29 +38,40 @@ function setup() {
     preloadImages();
 
 
-
-    let btn3 = createButton("siguiente");
-    btn2.mousePressed(function () {
-        //DeviceOrientationEvent.requestPermission();
-        //orderScreen(3);
-        //btn1.hide();
+    let btn6 = createButton("Siguiente");
+    btn6.mousePressed(function () {
         socket.emit('app-change-mupi-screen', screenMobile);
         screenMobile++;
-        console.log("btn: ", btn2.style);
-        btn2.style("display", 'none');
+        btn6.style("display", 'none');
+    });
+
+    let btn5 = createButton("Siguiente");
+    btn5.mousePressed(function () {
+        socket.emit('app-change-mupi-screen', screenMobile);
+        screenMobile++;
+        btn5.style("display", 'none');
+    });
+
+    let btn4 = createButton("Siguiente");
+    btn4.mousePressed(function () {
+        socket.emit('app-change-mupi-screen', screenMobile);
+        screenMobile++;
+        btn4.style("display", 'none');
+    });
+
+    let btn3 = createButton("Siguiente");
+    btn3.mousePressed(function () {
+        socket.emit('app-change-mupi-screen', screenMobile);
+        screenMobile++;
+        btn3.style("display", 'none');
     });
 
     let btn2 = createButton("Siguiente");
     btn2.mousePressed(function () {
-        //DeviceOrientationEvent.requestPermission();
-        //orderScreen(3);
-        //btn1.hide();
         socket.emit('app-change-mupi-screen', screenMobile);
         screenMobile++;
-        console.log("btn: ", btn2.style);
         btn2.style("display", 'none');
     });
-
 
     let btn1 = createButton("Juega Ahora");
     btn1.mousePressed(function () {
@@ -72,8 +83,6 @@ function setup() {
         console.log("btn: ", btn1.style);
         btn1.style("display", 'none');
     });
-
-   
 }
 
 function draw() {
@@ -89,14 +98,12 @@ function draw() {
 }*/
 
 function preloadImages() {
-
     screen_MB1 = loadImage('img/MB-screen1.png');
     screen_MB2 = loadImage('img/MB-screen2.png');
     screen_MB3 = loadImage('img/MB-screen3.png');
     screen_MB4 = loadImage('img/MB-screen4.png');
     screen_MB5 = loadImage('img/MB-screen5.png');
     screen_MB6 = loadImage('img/MB-screen6.png');
-
 }
 
 function displayScreens() {
@@ -154,7 +161,6 @@ function changeScreen() {
             socket.emit('changeScreen', {
                 screenMobile
             });
-            //background(255, 0, 0);
             break;
     }
 }
