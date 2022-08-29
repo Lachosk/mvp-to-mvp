@@ -119,6 +119,7 @@ function displayScreens() {
 
         case 3: //Pantalla de juego
             image(screen_MB3, 0, 0);
+            deviceMoved();
             break;
 
         case 4:
@@ -138,9 +139,6 @@ function displayScreens() {
     }
 }
 
-function orderScreen(screenNumber) {
-    socket.emit('screens', screenNumber);
-}
 
 function touchMoved() {
     switch (interactions) {
@@ -155,7 +153,7 @@ function touchMoved() {
     }
 }
 
-function changeScreen() {
+/*function changeScreen() {
     switch (interactions) {
         case 0:
             socket.emit('changeScreen', {
@@ -163,7 +161,7 @@ function changeScreen() {
             });
             break;
     }
-}
+}*/
 
 /*function touchStarted(){
     isTouched = true;
@@ -173,7 +171,7 @@ function touchEnded(){
     isTouched = false;
 }*/
 
-/*function deviceMoved() {
+function deviceMoved() {
     switch (interactions) {
         case 1:
             socket.emit('mobile-instructions', { interactions, pAccelerationX, pAccelerationY, pAccelerationZ });
@@ -185,7 +183,7 @@ function touchEnded(){
             break;
     }
     
-}*/
+}
 
 /*function deviceShaken() {
     //socket.emit('mobile-instructions', 'Moved!');

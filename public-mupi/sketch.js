@@ -9,6 +9,12 @@ let comidaMala;
 let badFood = [];
 let goodFood = [];
 
+let dogBowl = {
+    x: 0,
+    y: 0,
+
+};
+
 let controllerX, controllerY = 0;
 let deviceWidth, deviceHeight = 0;
 let mupiWidth, mupiHeight = 0;
@@ -34,6 +40,9 @@ function setup() {
     controllerY = windowHeight / 2;
     mupiWidth = windowWidth;
     mupiHeight = windowHeight;
+
+    dogBowl.x = 300;
+    dogBowl.y = 730;
 
     background(0);
     preloadImages();
@@ -78,14 +87,67 @@ function createFood() {
 }
 
 function paintFood() {
+    
+    if(badFood != null){
+        for (let i = 0; i < badFood.length; i++) {
+            badFood[i].draw();
+            touchBadFood();
+        }
+    }
+    
+    if(goodFood != null){
+        for (let i = 0; i < goodFood.length; i++) {
+            goodFood[i].draw();
+        }
+    
+    }
+
+    
+}
+
+function paintDogBowl() {
+    fill(255);
+    rect(controllerX, 620,60,60);
+
+}
+
+function removeFood() {
+
+    
     for (let i = 0; i < badFood.length; i++) {
-        badFood[i].draw();
+        if (badFood[i].getPosY() > 770  == true) {
+            badFood.splice(i);
+            console.log('works');
+
+        }
     }
 
     for (let i = 0; i < goodFood.length; i++) {
-        goodFood[i].draw();
+        
+        if (goodFood[i].getPosY() > 770 == true) {
+            goodFood.splice(i);
+            console.log('works2');
+
+        }
+    }
+
+    console.log(badFood.length);
+}
+
+function touchBadFood(){
+    for (let i = 0; i < badFood.length; i++) {
+       // const badFoodElement = badFood[i];
+        //let badFoodX = badFoodElement.getX();
+        //let badFoodY = badFoodElement.getY();
+        if (badFood[i].getX === controllerX && badFood[i].getY === 620) {
+            console.log('toca');
+            badFood = [];
+            goodFood = [];
+        }
     }
 }
+
+
 
 function displayScreens() {
     switch (screenNum) {
@@ -99,8 +161,13 @@ function displayScreens() {
 
         case 3: //Pantalla de juego
             image(screen3, 0, 0);
+            paintDogBowl();
             createFood();
             paintFood();
+            
+            
+            
+            //removeFood();
             break;
 
         case 4:
@@ -121,7 +188,7 @@ function displayScreens() {
 }
 
 socket.on('mupi-instructions', instructions => {
-    console.log('ID: ' + socket.id);
+    //console.log('ID: ' + socket.id);
 
     let {
         interactions
@@ -173,26 +240,3 @@ socket.on('mupi-react-to-change', screen => {
     console.log("Screen has been changed");
 })
 
-socket.on('screens', (screenNumber) => {
-
-    switch (screenNumber) {
-        case 0:
-            screenNum = 1;
-            break;
-
-        case 1:
-            screenNum = 5;
-            break;
-
-        case 2:
-            screenNum = 6;
-            break;
-
-        case 3:
-            screenNum = 2;
-            break;
-
-        case 4:
-            screenNum = 2;
-    }
-})

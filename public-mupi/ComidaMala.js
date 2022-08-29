@@ -17,5 +17,13 @@ class ComidaMala {
         this.y =++ this.vel;
     }
 
+    get getX(){
+        return this.x;
+    }
+
+    get getY(){
+        return this.y;
+    }
+
 
 }
