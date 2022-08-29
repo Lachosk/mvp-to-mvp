@@ -37,18 +37,43 @@ function setup() {
     });
     preloadImages();
 
-    //DeviceOrientationEvent.requestPermission();
+
+
+    let btn3 = createButton("siguiente");
+    btn2.mousePressed(function () {
+        //DeviceOrientationEvent.requestPermission();
+        //orderScreen(3);
+        //btn1.hide();
+        socket.emit('app-change-mupi-screen', screenMobile);
+        screenMobile++;
+        console.log("btn: ", btn2.style);
+        btn2.style("display", 'none');
+    });
+
+    let btn2 = createButton("Siguiente");
+    btn2.mousePressed(function () {
+        //DeviceOrientationEvent.requestPermission();
+        //orderScreen(3);
+        //btn1.hide();
+        socket.emit('app-change-mupi-screen', screenMobile);
+        screenMobile++;
+        console.log("btn: ", btn2.style);
+        btn2.style("display", 'none');
+    });
+
+
     let btn1 = createButton("Juega Ahora");
     btn1.mousePressed(function () {
-        // //DeviceOrientationEvent.requestPermission();
-        // orderScreen(3);
-        // btn1.hide();
+        //DeviceOrientationEvent.requestPermission();
+        //orderScreen(3);
+        //btn1.hide();
         socket.emit('app-change-mupi-screen', screenMobile);
         screenMobile++;
         console.log("btn: ", btn1.style);
         btn1.style("display", 'none');
     });
 
+   
 }
 
 function draw() {
@@ -82,7 +107,7 @@ function displayScreens() {
 
         case 2:
             image(screen_MB2, 0, 0);
-    
+
             break;
 
         case 3: //Pantalla de juego
@@ -113,7 +138,11 @@ function orderScreen(screenNumber) {
 function touchMoved() {
     switch (interactions) {
         case 0:
-            socket.emit('mobile-instructions', { interactions, pmouseX, pmouseY });
+            socket.emit('mobile-instructions', {
+                interactions,
+                pmouseX,
+                pmouseY
+            });
             background(255, 0, 0);
             break;
     }
@@ -122,7 +151,9 @@ function touchMoved() {
 function changeScreen() {
     switch (interactions) {
         case 0:
-            socket.emit('changeScreen', { screenMobile });
+            socket.emit('changeScreen', {
+                screenMobile
+            });
             //background(255, 0, 0);
             break;
     }
