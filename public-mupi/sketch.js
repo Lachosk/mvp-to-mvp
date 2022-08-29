@@ -7,6 +7,7 @@ console.log('Server IP: ', NGROK);
 let comidaMala;
 
 let badFood = [];
+let goodFood = [];
 
 let controllerX, controllerY = 0;
 let deviceWidth, deviceHeight = 0;
@@ -24,7 +25,7 @@ let screen5;
 let screen6;
 
 function setup() {
-    frameRate(60);
+    //frameRate(60);
     canvas = createCanvas(windowWidth, windowHeight);
     canvas.style('z-index', '-1');
     canvas.style('position', 'fixed');
@@ -35,19 +36,20 @@ function setup() {
     mupiWidth = windowWidth;
     mupiHeight = windowHeight;
     
-    frameRate(60)
+    //frameRate(60)
     background(0);
     preloadImages();
-    screenNum = 2;
-    createFood();
+    screenNum = 1;
+    
     //comidaMala = new ComidaMala(random(1, 590), -10);
     
 }
 
 function draw() {
+    
     background(0, 5);
     displayScreens();
-    
+    createFood();
 }
 
 function mouseDragged() {
@@ -73,16 +75,22 @@ function preloadImages() {
 }
 
 function createFood(){
-    if (frameCount = 60) {
+    if (frameCount % 360 === 0) {
         badFood.push(new ComidaMala(random(1, 590), -10))
-        console.log("new ball")
-        frameCount = 0;
+    }
+
+    if (frameCount % 240 === 0) {
+        badFood.push(new ComidaBuena(random(1, 590), -10))
     }
 }
 
 function paintFood(){
     for (let i = 0; i < badFood.length; i++) {
         badFood[i].draw();
+    }
+
+    for (let i = 0; i < goodFood.length; i++) {
+        goodFood[i].draw();
     }
 }
 
@@ -99,7 +107,6 @@ function displayScreens() {
         case 3: //Pantalla de juego
             image(screen3, 0, 0);
             paintFood();
-            //comidaMala.draw();
             break;
 
         case 4:
@@ -119,11 +126,11 @@ function displayScreens() {
     }
 }
 
-function newCursor(x, y) {
+/*function newCursor(x, y) {
     noStroke();
     fill(255);
     ellipse(x, y, 10, 10);
-}
+}*/
 
 socket.on('mupi-instructions', instructions => {
     console.log('ID: ' + socket.id);
@@ -162,6 +169,7 @@ socket.on('mupi-instructions', instructions => {
 });
 
 socket.on('mupi-size', deviceSize => {
+    console.log("Screen change")
     let {
         windowWidth,
         windowHeight
@@ -169,9 +177,13 @@ socket.on('mupi-size', deviceSize => {
     deviceWidth = windowWidth;
     deviceHeight = windowHeight;
     console.log(`User is using a smartphone size of ${deviceWidth} and ${deviceHeight}`);
-    screenNum++;
+    // screenNum++;
 });
 
+socket.on('mupi-react-to-change', screen => {
+    screenNum++;
+    console.log("Screen has been changed");
+})
 
 socket.on('screens', (screenNumber) => {
 

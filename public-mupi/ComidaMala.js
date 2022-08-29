@@ -2,12 +2,12 @@ class ComidaMala {
     constructor(x,y,radio,vel) {
         this.x = x;
         this.y = y;
-        this.radio = 50;
-        this.vel = 5;
+        this.radio = 30;
+        this.vel = 10;
     }
 
     draw() {
-        fill(255);
+        fill(255,0,0);
         ellipse(this.x, this.y, this.radio, this.radio);
         this.move();
     }

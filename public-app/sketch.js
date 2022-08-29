@@ -28,7 +28,7 @@ function setup() {
     controllerX = windowWidth / 2;
     controllerY = windowHeight / 2;
     background(0);
-    screenMobile = 3;
+    screenMobile = 1;
     angleMode(DEGREES);
 
     socket.emit('device-size', {
@@ -37,24 +37,31 @@ function setup() {
     });
     preloadImages();
 
+    //DeviceOrientationEvent.requestPermission();
     let btn1 = createButton("Juega Ahora");
     btn1.mousePressed(function () {
+        // //DeviceOrientationEvent.requestPermission();
+        // orderScreen(3);
+        // btn1.hide();
+        socket.emit('app-change-mupi-screen', screenMobile);
         screenMobile++;
-        //DeviceOrientationEvent.requestPermission();
-        orderScreen(3);
-        btn1.hide();
+        console.log("btn: ", btn1.style);
+        btn1.style("display", 'none');
     });
-}
 
-function orderScreen(screenNumber) {
-    socket.emit('screens', screenNumber);
 }
 
 function draw() {
     background(0, 5);
     displayScreens();
+    /*newCursor(pmouseX, pmouseY);
+    fill(255);
+    ellipse(controllerX, controllerY, 50, 50);*/
 }
 
+/*function mouseDragged() {
+    socket.emit('positions', { controlX: pmouseX, controlY: pmouseY });
+}*/
 
 function preloadImages() {
 
@@ -68,7 +75,6 @@ function preloadImages() {
 }
 
 function displayScreens() {
-
     switch (screenMobile) {
         case 1:
             image(screen_MB1, 0, 0);
@@ -76,7 +82,7 @@ function displayScreens() {
 
         case 2:
             image(screen_MB2, 0, 0);
-            socket.emit('screens');
+    
             break;
 
         case 3: //Pantalla de juego
@@ -100,17 +106,24 @@ function displayScreens() {
     }
 }
 
-
+function orderScreen(screenNumber) {
+    socket.emit('screens', screenNumber);
+}
 
 function touchMoved() {
     switch (interactions) {
         case 0:
-            socket.emit('mobile-instructions', {
-                interactions,
-                pmouseX,
-                pmouseY
-            });
+            socket.emit('mobile-instructions', { interactions, pmouseX, pmouseY });
             background(255, 0, 0);
+            break;
+    }
+}
+
+function changeScreen() {
+    switch (interactions) {
+        case 0:
+            socket.emit('changeScreen', { screenMobile });
+            //background(255, 0, 0);
             break;
     }
 }
