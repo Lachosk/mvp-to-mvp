@@ -15,6 +15,8 @@ let dogBowl = {
 
 };
 
+let lostGame = false;
+
 let controllerX, controllerY = 0;
 let deviceWidth, deviceHeight = 0;
 let mupiWidth, mupiHeight = 0;
@@ -144,10 +146,10 @@ function touchBadFood(){
             let badFoodX = badFood[i].getX;
             let badFoodY = badFood[i].getY;
             if (dist(badFoodX, badFoodY, controllerX, 620)<30) {
-                console.log('toca');
-                
+                console.log('Perdiste')
                 badFood = [];
                 goodFood = [];
+                lostGame = true;
             }
         }
     }
@@ -157,12 +159,10 @@ function touchBadFood(){
 function touchGoodFood(){
     if (goodFood.length > 0){
         for (let i = 0; i < goodFood.length; i++) {
-            //const badFoodElement = badFood[i];
             let goodFoodX = goodFood[i].getX;
             let goodFoodY = goodFood[i].getY;
             if (dist(goodFoodX, goodFoodY, controllerX, 620)<30) {
-                console.log('toca');
-
+                console.log('toca comida buena');
                 goodFood.splice[i];
             }
         }
@@ -184,12 +184,15 @@ function displayScreens() {
 
         case 3: //Pantalla de juego
             image(screen3, 0, 0);
-            paintDogBowl();
-            createFood();
-            paintFood();
-            touchBadFood();
-            touchGoodFood();
-            removeFood();
+            if (lostGame == false){
+                paintDogBowl();
+                createFood();
+                paintFood();
+                touchBadFood();
+                touchGoodFood();
+                removeFood();
+            }
+            
             break;
 
         case 4:
