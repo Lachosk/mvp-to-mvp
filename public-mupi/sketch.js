@@ -1,13 +1,15 @@
+//const { text } = require("express");
+
 const NGROK = `https://${window.location.hostname}`;
 let socket = io(NGROK, {
     path: '/real-time'
 });
 console.log('Server IP: ', NGROK);
 
-let comidaMala;
-
 let badFood = [];
 let goodFood = [];
+
+let puntos;
 
 let dogBowl = {
     x: 0,
@@ -45,6 +47,8 @@ function setup() {
 
     dogBowl.x = 300;
     dogBowl.y = 730;
+
+    puntos = 0;
 
     background(0);
     preloadImages();
@@ -167,10 +171,16 @@ function touchGoodFood(){
             if (dist(goodFoodX, goodFoodY, controllerX, 620)<30) {
                 console.log('toca comida buena');
                 goodFood.splice(i,1);
+               puntos=+100;
             }
         }
     }
     
+}
+
+function paintPuntos(){
+    fill(255);
+    text('Puntuación '+puntos, 560, 50);
 }
 
 
@@ -188,6 +198,7 @@ function displayScreens() {
         case 3: //Pantalla de juego
             image(screen3, 0, 0);
             if (lostGame == false){
+               paintPuntos();
                 paintDogBowl();
                 createFood();
                 paintFood();
