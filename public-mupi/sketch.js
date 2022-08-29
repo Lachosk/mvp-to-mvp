@@ -91,7 +91,7 @@ function paintFood() {
     if(badFood != null){
         for (let i = 0; i < badFood.length; i++) {
             badFood[i].draw();
-            touchBadFood();
+            
         }
     }
     
@@ -107,6 +107,7 @@ function paintFood() {
 
 function paintDogBowl() {
     fill(255);
+    rectMode(CENTER);
     rect(controllerX, 620,60,60);
 
 }
@@ -115,18 +116,20 @@ function removeFood() {
 
     
     for (let i = 0; i < badFood.length; i++) {
-        if (badFood[i].getPosY() > 770  == true) {
-            badFood.splice(i);
-            console.log('works');
+        if (badFood[i].getY > 770  == true) {
+            //badFood.splice(i);
+            badFood.shift(i);
+            //console.log('works');
 
         }
     }
 
     for (let i = 0; i < goodFood.length; i++) {
         
-        if (goodFood[i].getPosY() > 770 == true) {
-            goodFood.splice(i);
-            console.log('works2');
+        if (goodFood[i].getY > 770 == true) {
+            //goodFood.splice(i);
+            badFood.shift(i);
+            //console.log('works2');
 
         }
     }
@@ -135,16 +138,36 @@ function removeFood() {
 }
 
 function touchBadFood(){
-    for (let i = 0; i < badFood.length; i++) {
-       // const badFoodElement = badFood[i];
-        //let badFoodX = badFoodElement.getX();
-        //let badFoodY = badFoodElement.getY();
-        if (badFood[i].getX === controllerX && badFood[i].getY === 620) {
-            console.log('toca');
-            badFood = [];
-            goodFood = [];
+    if (badFood.length > 0){
+        for (let i = 0; i < badFood.length; i++) {
+            //const badFoodElement = badFood[i];
+            let badFoodX = badFood[i].getX;
+            let badFoodY = badFood[i].getY;
+            if (dist(badFoodX, badFoodY, controllerX, 620)<30) {
+                console.log('toca');
+                
+                badFood = [];
+                goodFood = [];
+            }
         }
     }
+    
+}
+
+function touchGoodFood(){
+    if (goodFood.length > 0){
+        for (let i = 0; i < goodFood.length; i++) {
+            //const badFoodElement = badFood[i];
+            let goodFoodX = goodFood[i].getX;
+            let goodFoodY = goodFood[i].getY;
+            if (dist(goodFoodX, goodFoodY, controllerX, 620)<30) {
+                console.log('toca');
+
+                goodFood.splice[i];
+            }
+        }
+    }
+    
 }
 
 
@@ -164,10 +187,9 @@ function displayScreens() {
             paintDogBowl();
             createFood();
             paintFood();
-            
-            
-            
-            //removeFood();
+            touchBadFood();
+            touchGoodFood();
+            removeFood();
             break;
 
         case 4:

@@ -8,6 +8,7 @@ class ComidaMala {
 
     draw() {
         fill(255,0,0);
+        ellipseMode(CENTER);
         ellipse(this.x, this.y, this.radio, this.radio);
         this.move();
     }
