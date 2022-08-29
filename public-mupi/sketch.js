@@ -39,7 +39,11 @@ function setup() {
     //frameRate(60)
     background(0);
     preloadImages();
+<<<<<<< HEAD
     screenNum = 1;
+=======
+    screenNum = 2;
+>>>>>>> 7410e25414599158472ce605b0a10b391a2ca9a2
     
     //comidaMala = new ComidaMala(random(1, 590), -10);
     
@@ -50,6 +54,10 @@ function draw() {
     background(0, 5);
     displayScreens();
     createFood();
+<<<<<<< HEAD
+=======
+   
+>>>>>>> 7410e25414599158472ce605b0a10b391a2ca9a2
 }
 
 function mouseDragged() {
