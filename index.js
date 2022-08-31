@@ -31,6 +31,10 @@ io.on('connection', socket => {
         socket.broadcast.emit('mupi-instructions', instructions);
     });
 
+    socket.on('user-data', data => {
+        socket.broadcast.emit('mupi-recieve-data', data);
+    });
+
     socket.on('app-change-mupi-screen', screen => {
         console.log(`Screen: ${screen}`);
         socket.broadcast.emit('mupi-react-to-change', 1);

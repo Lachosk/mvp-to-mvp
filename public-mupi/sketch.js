@@ -82,6 +82,10 @@ function preloadImages() {
 
 }
 
+socket.on("mupi-recieve-data", data =>{
+    console.log(data,"data");
+})
+
 function createFood() {
     if (frameCount % 360 === 0) {
         badFood.push(new ComidaMala(random(1, 590), -10))

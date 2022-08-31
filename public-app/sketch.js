@@ -50,6 +50,7 @@ function setup() {
         socket.emit('app-change-mupi-screen', screenMobile);
         screenMobile++;
         btn5.style("display", 'none');
+        dataUser();
     });
 
     let btn4 = createButton("Siguiente");
@@ -84,6 +85,11 @@ function setup() {
         btn1.style("display", 'none');
     });
 }
+
+function dataUser(){
+    socket.emit('user-data', {ip:'123',name:'Nicolas',username:'Lacho'});
+}
+
 
 function draw() {
     background(0, 5);
