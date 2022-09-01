@@ -5,8 +5,7 @@ let socket = io(NGROK, {
 });
 
 let controllerX, controllerY = 0;
-let interactions = 2;
-let isTouched = false;
+let interactions = 4;
 
 let screenMobile;
 
@@ -37,10 +36,12 @@ function setup() {
     });
     preloadImages();
 
+    //createInputs();
+
 
     let btn6 = createButton("Siguiente");
     btn6.mousePressed(function () {
-        socket.emit('app-change-mupi-screen', screenMobile);
+        socket.emit('app-change-mupi-screen', screenMobile);  //se está mandando a la ruta 'app-change-mupi-screen' Screenmobile (que es el mensaje)
         screenMobile++;
         btn6.style("display", 'none');
     });
@@ -50,7 +51,6 @@ function setup() {
         socket.emit('app-change-mupi-screen', screenMobile);
         screenMobile++;
         btn5.style("display", 'none');
-        dataUser();
     });
 
     let btn4 = createButton("Siguiente");
@@ -86,22 +86,11 @@ function setup() {
     });
 }
 
-function dataUser(){
-    socket.emit('user-data', {ip:'123',name:'Nicolas',username:'Lacho'});
-}
-
-
 function draw() {
     background(0, 5);
     displayScreens();
-    /*newCursor(pmouseX, pmouseY);
-    fill(255);
-    ellipse(controllerX, controllerY, 50, 50);*/
 }
 
-/*function mouseDragged() {
-    socket.emit('positions', { controlX: pmouseX, controlY: pmouseY });
-}*/
 
 function preloadImages() {
     screen_MB1 = loadImage('img/MB-screen1.png');
@@ -125,15 +114,18 @@ function displayScreens() {
 
         case 3: //Pantalla de juego
             image(screen_MB3, 0, 0);
+            interactions = 2;
             deviceMoved();
             break;
 
         case 4:
             image(screen_MB4, 0, 0);
+            interactions = 4;
             break;
 
         case 5:
             image(screen_MB5, 0, 0);
+            forms = true;
             break;
 
         case 6:
@@ -159,23 +151,7 @@ function touchMoved() {
     }
 }
 
-/*function changeScreen() {
-    switch (interactions) {
-        case 0:
-            socket.emit('changeScreen', {
-                screenMobile
-            });
-            break;
-    }
-}*/
 
-/*function touchStarted(){
-    isTouched = true;
-}
-
-function touchEnded(){
-    isTouched = false;
-}*/
 
 function deviceMoved() {
     switch (interactions) {
@@ -200,8 +176,20 @@ function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
 }
 
-/*function newCursor(x, y) {
-    noStroke();
-    fill(255);
-    ellipse(x, y, 10, 10);
-}*/
+function createInputs(){
+    
+    userInputName = createInput('');
+    userInputName.position((windowWidth / 2) - 80, windowHeight - 300);
+    userInputName.size(200);
+    userInputName.input(inputNameEvent);
+
+    userInputEmail = createInput('');
+    userInputEmail.position((windowWidth / 2) - 80, windowHeight - 220);
+    userInputEmail.size(200);
+    userInputEmail.input(inputEmailEvent);
+    
+    button = createButton('Enviar');
+    button.position((windowWidth / 2) - 80, windowHeight - 100);
+    button.mousePressed(submitForm);
+}
+

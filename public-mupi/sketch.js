@@ -1,5 +1,3 @@
-//const { text } = require("express");
-
 const NGROK = `https://${window.location.hostname}`;
 let socket = io(NGROK, {
     path: '/real-time'
@@ -16,6 +14,8 @@ let dogBowl = {
     y: 0,
 
 };
+
+
 
 let lostGame = false;
 
@@ -52,6 +52,9 @@ function setup() {
 
     background(0);
     preloadImages();
+
+   
+
     screenNum = 1;
 }
 
@@ -82,9 +85,32 @@ function preloadImages() {
 
 }
 
-socket.on("mupi-recieve-data", data =>{
-    console.log(data,"data");
-})
+// Inputs y botón:
+function inputNameEvent() {
+    user.name = this.value();
+}
+function inputEmailEvent() {
+    user.email = this.value();
+}
+function submitForm() {
+    sendUserData(user);
+    console.table(user);
+}
+
+//---------------------------------------- petición POST con Fetch
+async function sendUserData() { //la manera como se hacen las peticiones. Estamos haciendo una solicitud de HTTP
+    console.log ("nene");
+    
+    const request = {
+        method: 'POST',
+        headers:{
+            "Content-Type" : "application/json"
+        },
+        body: JSON.stringify(user)
+    }
+
+    await fetch("http://localhost:5050/send-user-data", request);
+}
 
 function createFood() {
     if (frameCount % 360 === 0) {
@@ -127,9 +153,7 @@ function removeFood() {
     
     for (let i = 0; i < badFood.length; i++) {
         if (badFood[i].getY > 770  == true) {
-            //badFood.splice(i);
             badFood.shift(i);
-            //console.log('works');
 
         }
     }
@@ -137,10 +161,7 @@ function removeFood() {
     for (let i = 0; i < goodFood.length; i++) {
         
         if (goodFood[i].getY > 770 == true) {
-            //goodFood.splice(i);
             badFood.shift(i);
-            //console.log('works2');
-
         }
     }
 
@@ -150,7 +171,6 @@ function removeFood() {
 function touchBadFood(){
     if (badFood.length > 0){
         for (let i = 0; i < badFood.length; i++) {
-            //const badFoodElement = badFood[i];
             let badFoodX = badFood[i].getX;
             let badFoodY = badFood[i].getY;
             if (dist(badFoodX, badFoodY, controllerX, 620)<30) {
@@ -175,7 +195,7 @@ function touchGoodFood(){
             if (dist(goodFoodX, goodFoodY, controllerX, 620)<30) {
                 console.log('toca comida buena');
                 goodFood.splice(i,1);
-               puntos=+100;
+               puntos = puntos + 100;
             }
         }
     }
@@ -186,6 +206,7 @@ function paintPuntos(){
     fill(255);
     text('Puntuación '+puntos, 560, 50);
 }
+
 
 
 
@@ -202,7 +223,7 @@ function displayScreens() {
         case 3: //Pantalla de juego
             image(screen3, 0, 0);
             if (lostGame == false){
-               paintPuntos();
+                paintPuntos();
                 paintDogBowl();
                 createFood();
                 paintFood();
@@ -219,6 +240,7 @@ function displayScreens() {
 
         case 5:
             image(screen5, 0, 0);
+        
             break;
 
         case 6:
@@ -230,12 +252,12 @@ function displayScreens() {
     }
 }
 
-socket.on('mupi-instructions', instructions => {
+socket.on('mupi-instructions', instructions => { 
     //console.log('ID: ' + socket.id);
 
     let {
         interactions
-    } = instructions;
+    } = instructions; //desestructuración de objetos. Si el objeto tiene varias propiedades es lo mismo a decir let interactions = instructions.interactions
     switch (interactions) {
         case 0:
             let {
