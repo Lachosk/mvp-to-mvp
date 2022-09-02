@@ -16,6 +16,12 @@ let screen_MB4;
 let screen_MB5;
 let screen_MB6;
 
+let btn1, btn2;
+let user = {
+    name: '',
+    email: ''
+};
+
 
 function setup() {
     frameRate(60);
@@ -36,52 +42,23 @@ function setup() {
     });
     preloadImages();
 
-    //createInputs();
+    createInputs();
 
-
-    let btn6 = createButton("Siguiente");
-    btn6.mousePressed(function () {
-        socket.emit('app-change-mupi-screen', screenMobile);  //se está mandando a la ruta 'app-change-mupi-screen' Screenmobile (que es el mensaje)
-        screenMobile++;
-        btn6.style("display", 'none');
-    });
-
-    let btn5 = createButton("Siguiente");
-    btn5.mousePressed(function () {
-        socket.emit('app-change-mupi-screen', screenMobile);
-        screenMobile++;
-        btn5.style("display", 'none');
-    });
-
-    let btn4 = createButton("Siguiente");
-    btn4.mousePressed(function () {
-        socket.emit('app-change-mupi-screen', screenMobile);
-        screenMobile++;
-        btn4.style("display", 'none');
-    });
-
-    let btn3 = createButton("Siguiente");
-    btn3.mousePressed(function () {
-        socket.emit('app-change-mupi-screen', screenMobile);
-        screenMobile++;
-        btn3.style("display", 'none');
-    });
-
-    let btn2 = createButton("Siguiente");
+    btn2 = createButton("Siguiente");
     btn2.mousePressed(function () {
         socket.emit('app-change-mupi-screen', screenMobile);
         screenMobile++;
-        btn2.style("display", 'none');
+        //btn2.style("display", 'none');
     });
 
-    let btn1 = createButton("Juega Ahora");
+    btn1 = createButton("Juega Ahora");
     btn1.mousePressed(function () {
         //DeviceOrientationEvent.requestPermission();
         //orderScreen(3);
         //btn1.hide();
         socket.emit('app-change-mupi-screen', screenMobile);
         screenMobile++;
-        console.log("btn: ", btn1.style);
+        //console.log("btn: ", btn1.style);
         btn1.style("display", 'none');
     });
 }
@@ -105,10 +82,26 @@ function displayScreens() {
     switch (screenMobile) {
         case 1:
             image(screen_MB1, 0, 0);
+
+            userInputName.style("display", 'none');
+            userInputEmail.style("display", 'none');
+            button.style("display", 'none');
+
+            btn2.style("display", 'none');
+
+
+
             break;
 
         case 2:
             image(screen_MB2, 0, 0);
+            userInputName.style("display", 'none');
+            userInputEmail.style("display", 'none');
+            button.style("display", 'none');
+
+            btn1.style("display", 'none');
+            btn2.style("display", 'block');
+
 
             break;
 
@@ -116,26 +109,84 @@ function displayScreens() {
             image(screen_MB3, 0, 0);
             interactions = 2;
             deviceMoved();
+            userInputName.style("display", 'none');
+            userInputEmail.style("display", 'none');
+            button.style("display", 'none');
+
+            btn1.style("display", 'none');
+
+
             break;
 
         case 4:
             image(screen_MB4, 0, 0);
             interactions = 4;
+            userInputName.style("display", 'none');
+            userInputEmail.style("display", 'none');
+            button.style("display", 'none');
+
+            btn1.style("display", 'none');
+
+
             break;
 
         case 5:
             image(screen_MB5, 0, 0);
-            forms = true;
+            userInputName.style('display', 'block');
+            userInputEmail.style('display', 'block');
+            button.style('display', 'block');
+
+            btn1.style("display", 'none');
+            btn2.style("display", 'none');
             break;
 
         case 6:
             image(screen_MB6, 0, 0);
+            userInputName.style("display", 'none');
+            userInputEmail.style("display", 'none');
+            button.style("display", 'none');
+
+            btn1.style("display", 'none');
+
             break;
 
         default:
             break;
     }
 }
+
+
+
+
+function inputNameEvent() {
+    user.name = this.value();
+    //userInputName.style("display", 'none');
+}
+function inputEmailEvent() {
+    user.email = this.value();
+    //userInputEmail.style("display", 'none');
+}
+function submitForm() {
+    sendUserData(user);
+    console.table(user);
+    button.style("display", 'none');
+}
+
+//---------------------------------------- petición POST con Fetch
+async function sendUserData() { //la manera como se hacen las peticiones. Estamos haciendo una solicitud de HTTP
+    //console.log ("nene");
+    
+    const request = {
+        method: 'POST',
+        headers:{
+            "Content-Type" : "application/json"
+        },
+        body: JSON.stringify(user)
+    }
+
+    await fetch(NGROK+"/send-user-data", request);
+}
+
 
 
 function touchMoved() {
@@ -146,7 +197,7 @@ function touchMoved() {
                 pmouseX,
                 pmouseY
             });
-            background(255, 0, 0);
+            //background(255, 0, 0);
             break;
     }
 }
@@ -161,7 +212,7 @@ function deviceMoved() {
             break;
         case 2:
             socket.emit('mobile-instructions', { interactions, rotationX, rotationY, rotationZ });
-            background(0, 255, 0);
+            //background(0, 255, 0);
             break;
     }
     
@@ -182,14 +233,17 @@ function createInputs(){
     userInputName.position((windowWidth / 2) - 80, windowHeight - 300);
     userInputName.size(200);
     userInputName.input(inputNameEvent);
+    
 
     userInputEmail = createInput('');
     userInputEmail.position((windowWidth / 2) - 80, windowHeight - 220);
     userInputEmail.size(200);
     userInputEmail.input(inputEmailEvent);
     
+    
     button = createButton('Enviar');
     button.position((windowWidth / 2) - 80, windowHeight - 100);
     button.mousePressed(submitForm);
+    
 }
 

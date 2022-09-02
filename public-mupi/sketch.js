@@ -85,32 +85,6 @@ function preloadImages() {
 
 }
 
-// Inputs y botón:
-function inputNameEvent() {
-    user.name = this.value();
-}
-function inputEmailEvent() {
-    user.email = this.value();
-}
-function submitForm() {
-    sendUserData(user);
-    console.table(user);
-}
-
-//---------------------------------------- petición POST con Fetch
-async function sendUserData() { //la manera como se hacen las peticiones. Estamos haciendo una solicitud de HTTP
-    console.log ("nene");
-    
-    const request = {
-        method: 'POST',
-        headers:{
-            "Content-Type" : "application/json"
-        },
-        body: JSON.stringify(user)
-    }
-
-    await fetch("http://localhost:5050/send-user-data", request);
-}
 
 function createFood() {
     if (frameCount % 360 === 0) {

@@ -56,3 +56,5 @@ app.get('/send-user-data',(request, response) =>{
     console.log("help");
     response.send(usuarios); //envia los datos. SI entramos a al ruta '/send-user-data' nos llegará el json de usuarios
 });
+
+
