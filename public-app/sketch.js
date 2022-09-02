@@ -170,6 +170,8 @@ function submitForm() {
     sendUserData(user);
     console.table(user);
     button.style("display", 'none');
+    socket.emit('app-change-mupi-screen', screenMobile);
+    screenMobile++;
 }
 
 //---------------------------------------- petición POST con Fetch
