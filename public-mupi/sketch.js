@@ -33,6 +33,15 @@ let screen3;
 let screen4;
 let screen5;
 let screen6;
+let meat;
+let bowl;
+let chicken;
+let carrot;
+let salmon;
+let grapes;
+let avocado;
+let chocolate;
+let onion;
 
 function setup() {
     canvas = createCanvas(windowWidth, windowHeight);
@@ -82,17 +91,63 @@ function preloadImages() {
     screen4 = loadImage('img/MUPI-screen4.png');
     screen5 = loadImage('img/MUPI-screen5.png');
     screen6 = loadImage('img/MUPI-screen6.png');
+    bowl = loadImage('img/bowl.png');
+    meat = loadImage('img/carne.png');
+    chicken = loadImage('img/pollo.png');
+    carrot = loadImage('img/zanahoria.png');
+    salmon = loadImage('img/salmon.png');
+    grapes = loadImage('img/grapes.png');
+    avocado = loadImage('img/avocado.png');
+    chocolate = loadImage('img/chocolate.png');
+    onion = loadImage('img/onion.png');
 
 }
 
 
 function createFood() {
     if (frameCount % 360 === 0) {
-        badFood.push(new ComidaMala(random(1, 590), -10))
+        let randomFood = int(random(1,4));
+        console.log(randomFood);
+        switch (randomFood) {
+            case 1:
+                badFood.push(new ComidaMala(random(1, 590), -10, avocado))
+                break;
+            case 2:
+                badFood.push(new ComidaMala(random(1, 590), -10, grapes))
+                break;
+            case 3:
+                badFood.push(new ComidaMala(random(1, 590), -10, chocolate))
+                break;
+            case 4:
+                badFood.push(new ComidaMala(random(1, 590), -10, onion))
+                break;
+        
+            default:
+                break;
+        }
+        
     }
 
     if (frameCount % 240 === 0) {
-        goodFood.push(new ComidaBuena(random(1, 590), -10))
+        let randomFood = int(random(1,4));
+        switch (randomFood) {
+            case 1:
+                goodFood.push(new ComidaBuena(random(1, 590), -10, meat))
+                break;
+            case 2:
+                goodFood.push(new ComidaBuena(random(1, 590), -10, chicken))
+                break;
+            case 3:
+                goodFood.push(new ComidaBuena(random(1, 590), -10, carrot))
+                break;
+            case 4:
+                goodFood.push(new ComidaBuena(random(1, 590), -10, salmon))
+                break;
+        
+            default:
+                break;
+        }
+        
     }
 }
 
@@ -101,6 +156,7 @@ function paintFood() {
     if(badFood != null){
         for (let i = 0; i < badFood.length; i++) {
             badFood[i].draw();
+            badFood[i].move();
             
         }
     }
@@ -108,6 +164,7 @@ function paintFood() {
     if(goodFood != null){
         for (let i = 0; i < goodFood.length; i++) {
             goodFood[i].draw();
+            goodFood[i].move();
         }
     
     }
@@ -116,9 +173,11 @@ function paintFood() {
 }
 
 function paintDogBowl() {
-    fill(255);
-    rectMode(CENTER);
-    rect(controllerX, 620,60,60);
+    //fill(255);
+    imageMode(CENTER);
+    image(bowl, controllerX,620,80,80);
+    /*rectMode(CENTER);
+    rect(controllerX, 620,60,60);*/
 
 }
 
@@ -147,7 +206,7 @@ function touchBadFood(){
         for (let i = 0; i < badFood.length; i++) {
             let badFoodX = badFood[i].getX;
             let badFoodY = badFood[i].getY;
-            if (dist(badFoodX, badFoodY, controllerX, 620)<30) {
+            if (dist(badFoodX, badFoodY, controllerX, 620)<40) {
                 console.log('Perdiste')
                 badFood = [];
                 goodFood = [];
@@ -195,7 +254,10 @@ function displayScreens() {
             break;
 
         case 3: //Pantalla de juego
+            //image(screen3, 600/2, 766/2);
+            imageMode(CORNER);
             image(screen3, 0, 0);
+            imageMode(CENTER);
             if (lostGame == false){
                 paintPuntos();
                 paintDogBowl();
@@ -209,15 +271,18 @@ function displayScreens() {
             break;
 
         case 4:
+            imageMode(CORNER);
             image(screen4, 0, 0);
             break;
 
         case 5:
+            imageMode(CORNER);
             image(screen5, 0, 0);
         
             break;
 
         case 6:
+            imageMode(CORNER);
             image(screen6, 0, 0);
             break;
 
