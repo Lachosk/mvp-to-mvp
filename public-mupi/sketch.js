@@ -194,7 +194,7 @@ function removeFood() {
     for (let i = 0; i < goodFood.length; i++) {
         
         if (goodFood[i].getY > 770 == true) {
-            badFood.shift(i);
+            goodFood.shift(i);
         }
     }
 
